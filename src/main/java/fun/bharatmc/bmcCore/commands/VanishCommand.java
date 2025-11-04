@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VanishCommand extends Command {
@@ -15,10 +16,11 @@ public class VanishCommand extends Command {
     private final VanishManager vanishManager;
 
     public VanishCommand(BMCCore plugin) {
-        super("vanish");
+        super("vanish", "Toggle vanish mode", "/vanish [player]", Arrays.asList("v"));
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
 
+        // Set command properties
         this.setDescription("Toggle vanish mode");
         this.setUsage("/vanish [player]");
         this.setPermission("bmccore.vanish");
