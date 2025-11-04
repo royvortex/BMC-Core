@@ -35,12 +35,21 @@ public class BroadcastCommand extends Command {
             return true;
         }
 
-        if (args.length < 2) {
+        if (args.length == 0) {
             if (sender instanceof Player) {
                 broadcastManager.sendHelp((Player) sender);
             } else {
-                sender.sendMessage("§cUsage: /broadcast <chat|title> <message>");
+                sender.sendMessage("§cUsage: /broadcast <chat|title|actionbar> <message>");
                 sender.sendMessage("§cFor title: /broadcast title <title> [subtitle]");
+                sender.sendMessage("§cUse '&' for color codes and '&#RRGGBB' for hex colors");
+            }
+            return true;
+        }
+
+        if (args.length < 2) {
+            sender.sendMessage("§cUsage: /broadcast " + args[0] + " <message>");
+            if (args[0].equalsIgnoreCase("title")) {
+                sender.sendMessage("§cFor subtitle: /broadcast title <title>|<subtitle>");
             }
             return true;
         }
@@ -59,9 +68,16 @@ public class BroadcastCommand extends Command {
             case "action":
                 handleActionBarBroadcast(sender, message);
                 break;
+            case "help":
+                if (sender instanceof Player) {
+                    broadcastManager.sendHelp((Player) sender);
+                } else {
+                    sender.sendMessage("§cHelp is only available in-game");
+                }
+                break;
             default:
                 sender.sendMessage("§cInvalid broadcast type: " + type);
-                sender.sendMessage("§cValid types: chat, title, actionbar");
+                sender.sendMessage("§cValid types: chat, title, actionbar, help");
                 break;
         }
 
@@ -102,7 +118,7 @@ public class BroadcastCommand extends Command {
         if (args.length == 1) {
             // Tab complete broadcast types
             String input = args[0].toLowerCase();
-            String[] types = {"chat", "title", "actionbar"};
+            String[] types = {"chat", "title", "actionbar", "help"};
 
             for (String type : types) {
                 if (type.startsWith(input)) {
