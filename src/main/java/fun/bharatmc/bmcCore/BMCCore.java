@@ -8,6 +8,8 @@ import fun.bharatmc.bmcCore.managers.VanishManager;
 import fun.bharatmc.bmcCore.listeners.VanishListener;
 import fun.bharatmc.bmcCore.managers.GodManager;
 import fun.bharatmc.bmcCore.managers.GamemodeManager;
+import fun.bharatmc.bmcCore.managers.BroadcastManager;
+import fun.bharatmc.bmcCore.commands.BroadcastCommand;
 import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +20,7 @@ public final class BMCCore extends JavaPlugin {
     private FlyManager flyManager;
     private GodManager godManager;
     private GamemodeManager gamemodeManager;
+    private BroadcastManager broadcastManager;
 
     @Override
     public void onEnable() {
@@ -31,6 +34,7 @@ public final class BMCCore extends JavaPlugin {
         this.flyManager = new FlyManager(this);
         this.godManager = new GodManager(this);
         this.gamemodeManager = new GamemodeManager(this);
+        this.broadcastManager = new BroadcastManager(this);
 
         // Register commands and events (Paper style)
         registerCommands();
@@ -72,6 +76,8 @@ public final class BMCCore extends JavaPlugin {
         GamemodeCommand gmcCommand = new GamemodeCommand(this, GameMode.CREATIVE, "gmc", "Change to creative mode");
         GamemodeCommand gmaCommand = new GamemodeCommand(this, GameMode.ADVENTURE, "gma", "Change to adventure mode");
         GamemodeCommand gmspCommand = new GamemodeCommand(this, GameMode.SPECTATOR, "gmsp", "Change to spectator mode");
+        //BroadCast
+        BroadcastCommand broadcastCommand = new BroadcastCommand(this);
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
@@ -91,6 +97,9 @@ public final class BMCCore extends JavaPlugin {
             getServer().getCommandMap().register("", gmcCommand);
             getServer().getCommandMap().register("", gmaCommand);
             getServer().getCommandMap().register("", gmspCommand);
+            // BroadCast
+            getServer().getCommandMap().register("bmccore", broadcastCommand);
+
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
             getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
@@ -108,4 +117,5 @@ public final class BMCCore extends JavaPlugin {
     public FlyManager getFlyManager() { return flyManager; }
     public GodManager getGodManager() { return godManager; }
     public GamemodeManager getGamemodeManager() { return gamemodeManager; }
+    public BroadcastManager getBroadcastManager() { return broadcastManager; }
 }
