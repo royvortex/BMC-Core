@@ -55,10 +55,6 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>commandapi-repo</id>
-            <url>https://repo.jorel.dev/repository/maven-releases/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -69,10 +65,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-bukkit-core</artifactId>
-            <version>9.5.0</version> <!-- or latest -->
-            <scope>provided</scope>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.42.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

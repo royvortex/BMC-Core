@@ -1,0 +1,19 @@
+# BMCCore Configuration
+database:
+  # SQLite database settings
+  filename: "core.db"
+  backup-on-disable: true
+
+vanish:
+  # Vanish feature settings
+  hide-from-tablist: true
+  hide-from-player-count: true
+  prevent-pickup: true
+  silent-join: true
+  silent-quit: true
+
+messages:
+  prefix: "&8[&6BMCCore&8] &7"
+  no-permission: "&cYou don't have permission to use this command!"
+  player-not-found: "&cPlayer not found!"
+  feature-disabled: "&cThis feature is currently disabled!"
