@@ -48,7 +48,7 @@ public class VanishManager {
             playerManager.setPlayerVanished(player, true);
         }
 
-        return !isVanished;
+        return !isVanished; // Return new state (true = now vanished, false = now visible)
     }
 
     private void applyVanishEffects(Player player) {
@@ -62,8 +62,7 @@ public class VanishManager {
         // Add night vision to prevent vanish darkness
         player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, true, false));
 
-        // Send vanish message to player
-        player.sendMessage("§aYou are now vanished!");
+        // REMOVED: Message sending - now handled by command only
     }
 
     private void removeVanishEffects(Player player) {
@@ -77,8 +76,7 @@ public class VanishManager {
         // Remove night vision
         player.removePotionEffect(PotionEffectType.NIGHT_VISION);
 
-        // Send unvanish message to player
-        player.sendMessage("§aYou are no longer vanished!");
+        // REMOVED: Message sending - now handled by command only
     }
 
     public void handlePlayerJoin(Player player) {

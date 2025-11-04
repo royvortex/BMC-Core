@@ -19,7 +19,6 @@ public class VanishCommand extends Command {
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
 
-        // Set command properties
         this.setDescription("Toggle vanish mode");
         this.setUsage("/vanish [player]");
         this.setPermission("bmccore.vanish");
@@ -28,53 +27,70 @@ public class VanishCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+        // Handle console without arguments
         if (!(sender instanceof Player) && args.length == 0) {
-            sender.sendMessage("§cThis command can only be used by players!");
+            sender.sendMessage("§cUsage: /vanish <player>");
             return true;
         }
 
-        if (!sender.hasPermission("bmccore.vanish")) {
-            sender.sendMessage("§cYou don't have permission to use this command!");
-            return true;
-        }
-
+        // No arguments - toggle self
         if (args.length == 0) {
-            // Toggle own vanish
-            Player player = (Player) sender;
-            boolean vanished = vanishManager.toggleVanish(player);
-            if (vanished) {
-                player.sendMessage("§aYou are now vanished!");
-            } else {
-                player.sendMessage("§aYou are no longer vanished!");
-            }
-            return true;
+            return toggleSelf((Player) sender);
         }
 
+        // One argument - toggle other player
         if (args.length == 1) {
-            // Toggle other player's vanish
-            if (!sender.hasPermission("bmccore.vanish.others")) {
-                sender.sendMessage("§cYou don't have permission to vanish other players!");
-                return true;
-            }
-
-            Player target = Bukkit.getPlayer(args[0]);
-            if (target == null) {
-                sender.sendMessage("§cPlayer not found: " + args[0]);
-                return true;
-            }
-
-            boolean vanished = vanishManager.toggleVanish(target);
-            if (vanished) {
-                sender.sendMessage("§aVanished " + target.getName() + "!");
-                target.sendMessage("§aYou have been vanished by " + sender.getName() + "!");
-            } else {
-                sender.sendMessage("§aUnvanished " + target.getName() + "!");
-                target.sendMessage("§aYou have been unvanished by " + sender.getName() + "!");
-            }
-            return true;
+            return toggleOther(sender, args[0]);
         }
 
         sender.sendMessage("§cUsage: /vanish [player]");
+        return true;
+    }
+
+    private boolean toggleSelf(Player player) {
+        if (!player.hasPermission("bmccore.vanish")) {
+            player.sendMessage("§cYou don't have permission to use this command!");
+            return true;
+        }
+
+        boolean isNowVanished = vanishManager.toggleVanish(player);
+
+        if (isNowVanished) {
+            player.sendMessage("§aYou are now vanished!");
+        } else {
+            player.sendMessage("§aYou are no longer vanished!");
+        }
+
+        return true;
+    }
+
+    private boolean toggleOther(CommandSender sender, String targetName) {
+        if (!sender.hasPermission("bmccore.vanish.others")) {
+            sender.sendMessage("§cYou don't have permission to vanish other players!");
+            return true;
+        }
+
+        Player target = Bukkit.getPlayer(targetName);
+        if (target == null) {
+            sender.sendMessage("§cPlayer not found: " + targetName);
+            return true;
+        }
+
+        boolean isNowVanished = vanishManager.toggleVanish(target);
+        boolean isSelf = sender.equals(target);
+
+        if (isNowVanished) {
+            sender.sendMessage("§aVanished " + target.getName() + "!");
+            if (!isSelf) {
+                target.sendMessage("§aYou have been vanished by " + sender.getName() + "!");
+            }
+        } else {
+            sender.sendMessage("§aUnvanished " + target.getName() + "!");
+            if (!isSelf) {
+                target.sendMessage("§aYou have been unvanished by " + sender.getName() + "!");
+            }
+        }
+
         return true;
     }
 
@@ -83,9 +99,9 @@ public class VanishCommand extends Command {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1 && sender.hasPermission("bmccore.vanish.others")) {
-            // Tab complete player names
+            String input = args[0].toLowerCase();
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
+                if (player.getName().toLowerCase().startsWith(input)) {
                     completions.add(player.getName());
                 }
             }
