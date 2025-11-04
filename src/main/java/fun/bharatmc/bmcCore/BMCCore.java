@@ -1,17 +1,14 @@
 package fun.bharatmc.bmcCore;
 
-import fun.bharatmc.bmcCore.commands.FlyCommand;
-import fun.bharatmc.bmcCore.commands.FlySpeedCommand;
-import fun.bharatmc.bmcCore.commands.VanishListCommand;
+import fun.bharatmc.bmcCore.commands.*;
 import fun.bharatmc.bmcCore.managers.DatabaseManager;
 import fun.bharatmc.bmcCore.managers.FlyManager;
 import fun.bharatmc.bmcCore.managers.PlayerManager;
 import fun.bharatmc.bmcCore.managers.VanishManager;
-import fun.bharatmc.bmcCore.commands.VanishCommand;
 import fun.bharatmc.bmcCore.listeners.VanishListener;
 import fun.bharatmc.bmcCore.managers.GodManager;
-import fun.bharatmc.bmcCore.commands.GodCommand;
-import fun.bharatmc.bmcCore.listeners.GodListener;
+import fun.bharatmc.bmcCore.managers.GamemodeManager;
+import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BMCCore extends JavaPlugin {
@@ -20,6 +17,7 @@ public final class BMCCore extends JavaPlugin {
     private VanishManager vanishManager;
     private FlyManager flyManager;
     private GodManager godManager;
+    private GamemodeManager gamemodeManager;
 
     @Override
     public void onEnable() {
@@ -32,6 +30,7 @@ public final class BMCCore extends JavaPlugin {
         this.vanishManager = new VanishManager(this);
         this.flyManager = new FlyManager(this);
         this.godManager = new GodManager(this);
+        this.gamemodeManager = new GamemodeManager(this);
 
         // Register commands and events (Paper style)
         registerCommands();
@@ -67,7 +66,12 @@ public final class BMCCore extends JavaPlugin {
         FlySpeedCommand flySpeedCommand = new FlySpeedCommand(this);
         //GodMode
         GodCommand godCommand = new GodCommand(this);
-
+        //Gamemode commands
+        GamemodeCommand gmCommand = new GamemodeCommand(this);
+        GamemodeCommand gmsCommand = new GamemodeCommand(this, GameMode.SURVIVAL, "gms", "Change to survival mode");
+        GamemodeCommand gmcCommand = new GamemodeCommand(this, GameMode.CREATIVE, "gmc", "Change to creative mode");
+        GamemodeCommand gmaCommand = new GamemodeCommand(this, GameMode.ADVENTURE, "gma", "Change to adventure mode");
+        GamemodeCommand gmspCommand = new GamemodeCommand(this, GameMode.SPECTATOR, "gmsp", "Change to spectator mode");
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
@@ -81,6 +85,12 @@ public final class BMCCore extends JavaPlugin {
             getServer().getCommandMap().register("", flySpeedCommand);
             //God Mode
             getServer().getCommandMap().register("", godCommand);
+            // Game Mode Manager
+            getServer().getCommandMap().register("", gmCommand);
+            getServer().getCommandMap().register("", gmsCommand);
+            getServer().getCommandMap().register("", gmcCommand);
+            getServer().getCommandMap().register("", gmaCommand);
+            getServer().getCommandMap().register("", gmspCommand);
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
             getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
@@ -92,21 +102,10 @@ public final class BMCCore extends JavaPlugin {
     }
 
     // Manager getters
-    public DatabaseManager getDatabaseManager() {
-        return databaseManager;
-    }
-
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
-
-    public VanishManager getVanishManager() {
-        return vanishManager;
-    }
-    public FlyManager getFlyManager() {
-        return flyManager;
-    }
-    public GodManager getGodManager() {
-        return godManager;
-    }
+    public DatabaseManager getDatabaseManager() { return databaseManager; }
+    public PlayerManager getPlayerManager() { return playerManager; }
+    public VanishManager getVanishManager() { return vanishManager; }
+    public FlyManager getFlyManager() { return flyManager; }
+    public GodManager getGodManager() { return godManager; }
+    public GamemodeManager getGamemodeManager() { return gamemodeManager; }
 }
