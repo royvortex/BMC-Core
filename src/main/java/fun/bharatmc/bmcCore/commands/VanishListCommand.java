@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,18 +17,12 @@ public class VanishListCommand extends Command {
     private final VanishManager vanishManager;
 
     public VanishListCommand(BMCCore plugin) {
-        super("vanishlist");
+        super("bmccore", "View all vanished players", "/vanishlist", Arrays.asList("vlist"));
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
 
-        // Set command properties
-        this.setDescription("View all vanished players");
-        this.setUsage("/vanishlist");
         this.setPermission("bmccore.vanish.see");
         this.setPermissionMessage("§cYou don't have permission to use this command!");
-
-        // Add aliases
-        this.setAliases(List.of("vlist", "vanished", "vanishlist"));
     }
 
     @Override

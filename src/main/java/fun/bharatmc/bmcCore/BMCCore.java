@@ -1,5 +1,6 @@
 package fun.bharatmc.bmcCore;
 
+import fun.bharatmc.bmcCore.commands.VanishListCommand;
 import fun.bharatmc.bmcCore.managers.DatabaseManager;
 import fun.bharatmc.bmcCore.managers.PlayerManager;
 import fun.bharatmc.bmcCore.managers.VanishManager;
@@ -49,11 +50,16 @@ public final class BMCCore extends JavaPlugin {
     private void registerCommands() {
         // Paper-style command registration
         VanishCommand vanishCommand = new VanishCommand(this);
+        VanishListCommand vanishListCommand = new VanishListCommand(this);
 
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
+
+            //Vanish
             getServer().getCommandMap().register("vanish", vanishCommand);
+            getServer().getCommandMap().register("vanishlist", vanishListCommand);
+
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
             getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
