@@ -1,4 +1,4 @@
-package fun.bharatmc.bMCCore;
+package fun.bharatmc.BMCCore;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

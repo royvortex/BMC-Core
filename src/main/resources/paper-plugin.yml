@@ -1,6 +1,6 @@
 name: BMC Core
 version: '1.0-SNAPSHOT'
-main: fun.bharatmc.bMCCore.BMCCore
+main: fun.bharatmc.BMCCore.BMCCore
 api-version: '1.21'
 authors: [ Vortex, AyoSynk, Shado ]
 website: bharatmc.fun
