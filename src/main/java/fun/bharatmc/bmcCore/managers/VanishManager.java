@@ -103,6 +103,11 @@ public class VanishManager {
         return vanishedPlayers.contains(player.getUniqueId());
     }
 
+    public Set<UUID> getVanishedPlayers() {
+        return new HashSet<>(vanishedPlayers);
+    }
+
+
     public void cleanup() {
         // Remove vanish effects from all players
         for (UUID uuid : vanishedPlayers) {
@@ -113,4 +118,9 @@ public class VanishManager {
         }
         vanishedPlayers.clear();
     }
+
+    public int getVanishedPlayerCount() {
+        return vanishedPlayers.size();
+    }
+
 }
