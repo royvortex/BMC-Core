@@ -2,6 +2,7 @@ package fun.bharatmc.bmcCore;
 
 import fun.bharatmc.bmcCore.commands.VanishListCommand;
 import fun.bharatmc.bmcCore.managers.DatabaseManager;
+import fun.bharatmc.bmcCore.managers.FlyManager;
 import fun.bharatmc.bmcCore.managers.PlayerManager;
 import fun.bharatmc.bmcCore.managers.VanishManager;
 import fun.bharatmc.bmcCore.commands.VanishCommand;
@@ -12,6 +13,7 @@ public final class BMCCore extends JavaPlugin {
     private DatabaseManager databaseManager;
     private PlayerManager playerManager;
     private VanishManager vanishManager;
+    private FlyManager flyManager;
 
     @Override
     public void onEnable() {
@@ -22,6 +24,7 @@ public final class BMCCore extends JavaPlugin {
         this.databaseManager = new DatabaseManager(this);
         this.playerManager = new PlayerManager(this);
         this.vanishManager = new VanishManager(this);
+        this.flyManager = new FlyManager(this);
 
         // Register commands and events (Paper style)
         registerCommands();
