@@ -4,34 +4,43 @@ import fun.bharatmc.bmcCore.BMCCore;
 import fun.bharatmc.bmcCore.managers.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class VanishCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class VanishCommand extends Command {
     private final BMCCore plugin;
     private final VanishManager vanishManager;
 
     public VanishCommand(BMCCore plugin) {
+        super("vanish");
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
+
+        // Set command properties
+        this.setDescription("Toggle vanish mode");
+        this.setUsage("/vanish [player]");
+        this.setPermission("bmccore.vanish");
+        this.setPermissionMessage("§cYou don't have permission to use this command!");
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!(sender instanceof Player) && args.length == 0) {
             sender.sendMessage("§cThis command can only be used by players!");
+            return true;
+        }
+
+        if (!sender.hasPermission("bmccore.vanish")) {
+            sender.sendMessage("§cYou don't have permission to use this command!");
             return true;
         }
 
         if (args.length == 0) {
             // Toggle own vanish
             Player player = (Player) sender;
-            if (!player.hasPermission("bmccore.vanish")) {
-                player.sendMessage("§cYou don't have permission to use this command!");
-                return true;
-            }
-
             boolean vanished = vanishManager.toggleVanish(player);
             if (vanished) {
                 player.sendMessage("§aYou are now vanished!");
@@ -67,5 +76,21 @@ public class VanishCommand implements CommandExecutor {
 
         sender.sendMessage("§cUsage: /vanish [player]");
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+        List<String> completions = new ArrayList<>();
+
+        if (args.length == 1 && sender.hasPermission("bmccore.vanish.others")) {
+            // Tab complete player names
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
+                    completions.add(player.getName());
+                }
+            }
+        }
+
+        return completions;
     }
 }

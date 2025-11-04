@@ -1,4 +1,4 @@
-name: BMC Core
+name: BMC-Core
 version: '1.0-SNAPSHOT'
 main: fun.bharatmc.bmcCore.BMCCore
 api-version: '1.21'

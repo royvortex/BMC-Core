@@ -22,7 +22,7 @@ public final class BMCCore extends JavaPlugin {
         this.playerManager = new PlayerManager(this);
         this.vanishManager = new VanishManager(this);
 
-        // Register commands and events
+        // Register commands and events (Paper style)
         registerCommands();
         registerEvents();
 
@@ -47,7 +47,17 @@ public final class BMCCore extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("vanish").setExecutor(new VanishCommand(this));
+        // Paper-style command registration
+        VanishCommand vanishCommand = new VanishCommand(this);
+
+        // Register the command with Paper's command map
+        try {
+            // This is the Paper-compatible way to register commands
+            getServer().getCommandMap().register("vanish", vanishCommand);
+            getLogger().info("Registered vanish command using Paper API");
+        } catch (Exception e) {
+            getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
+        }
     }
 
     private void registerEvents() {
