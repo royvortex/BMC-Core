@@ -17,7 +17,7 @@ public class VanishListCommand extends Command {
     private final VanishManager vanishManager;
 
     public VanishListCommand(BMCCore plugin) {
-        super("bmccore", "View all vanished players", "/vanishlist", Arrays.asList("vlist"));
+        super("vanishlist", "View all vanished players", "/vanishlist", Arrays.asList("vlist"));
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
 

@@ -3,6 +3,7 @@ package fun.bharatmc.bmcCore.commands;
 import fun.bharatmc.bmcCore.BMCCore;
 import fun.bharatmc.bmcCore.managers.VanishManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class VanishCommand extends Command {
     private final VanishManager vanishManager;
 
     public VanishCommand(BMCCore plugin) {
-        super("bmccore", "Adds you in vanish", "/vanish", Arrays.asList("v"));
+        super("vanish", "Adds you in vanish", "/vanish", Arrays.asList("v"));
         this.plugin = plugin;
         this.vanishManager = plugin.getVanishManager();
 
@@ -47,8 +48,10 @@ public class VanishCommand extends Command {
             // Send message ONLY from command, not from manager
             if (vanished) {
                 player.sendMessage("§aYou are now vanished!");
+                player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_RESONATE, 1f, 1.3f);
             } else {
                 player.sendMessage("§aYou are no longer vanished!");
+                player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1f, 1.3f);
             }
             return true;
         }

@@ -57,8 +57,8 @@ public final class BMCCore extends JavaPlugin {
             // This is the Paper-compatible way to register commands
 
             //Vanish
-            getServer().getCommandMap().register("vanish", vanishCommand);
-            getServer().getCommandMap().register("vanishlist", vanishListCommand);
+            getServer().getCommandMap().register("", vanishCommand);
+            getServer().getCommandMap().register("", vanishListCommand);
 
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
