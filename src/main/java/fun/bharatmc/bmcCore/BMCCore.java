@@ -85,4 +85,7 @@ public final class BMCCore extends JavaPlugin {
     public VanishManager getVanishManager() {
         return vanishManager;
     }
+    public FlyManager getFlyManager() {
+        return flyManager;
+    }
 }
