@@ -9,6 +9,9 @@ import fun.bharatmc.bmcCore.managers.PlayerManager;
 import fun.bharatmc.bmcCore.managers.VanishManager;
 import fun.bharatmc.bmcCore.commands.VanishCommand;
 import fun.bharatmc.bmcCore.listeners.VanishListener;
+import fun.bharatmc.bmcCore.managers.GodManager;
+import fun.bharatmc.bmcCore.commands.GodCommand;
+import fun.bharatmc.bmcCore.listeners.GodListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BMCCore extends JavaPlugin {
@@ -16,6 +19,7 @@ public final class BMCCore extends JavaPlugin {
     private PlayerManager playerManager;
     private VanishManager vanishManager;
     private FlyManager flyManager;
+    private GodManager godManager;
 
     @Override
     public void onEnable() {
@@ -27,6 +31,7 @@ public final class BMCCore extends JavaPlugin {
         this.playerManager = new PlayerManager(this);
         this.vanishManager = new VanishManager(this);
         this.flyManager = new FlyManager(this);
+        this.godManager = new GodManager(this);
 
         // Register commands and events (Paper style)
         registerCommands();
@@ -60,6 +65,8 @@ public final class BMCCore extends JavaPlugin {
         //Fly & Speed
         FlyCommand flyCommand = new FlyCommand(this);
         FlySpeedCommand flySpeedCommand = new FlySpeedCommand(this);
+        //GodMode
+        GodCommand godCommand = new GodCommand(this);
 
         // Register the command with Paper's command map
         try {
@@ -72,7 +79,8 @@ public final class BMCCore extends JavaPlugin {
             //Fly & Speed Control
             getServer().getCommandMap().register("", flyCommand);
             getServer().getCommandMap().register("", flySpeedCommand);
-
+            //God Mode
+            getServer().getCommandMap().register("", godCommand);
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
             getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
@@ -97,5 +105,8 @@ public final class BMCCore extends JavaPlugin {
     }
     public FlyManager getFlyManager() {
         return flyManager;
+    }
+    public GodManager getGodManager() {
+        return godManager;
     }
 }
