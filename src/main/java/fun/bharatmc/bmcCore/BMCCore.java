@@ -1,5 +1,7 @@
 package fun.bharatmc.bmcCore;
 
+import fun.bharatmc.bmcCore.commands.FlyCommand;
+import fun.bharatmc.bmcCore.commands.FlySpeedCommand;
 import fun.bharatmc.bmcCore.commands.VanishListCommand;
 import fun.bharatmc.bmcCore.managers.DatabaseManager;
 import fun.bharatmc.bmcCore.managers.FlyManager;
@@ -52,8 +54,12 @@ public final class BMCCore extends JavaPlugin {
 
     private void registerCommands() {
         // Paper-style command registration
+        // Vanish
         VanishCommand vanishCommand = new VanishCommand(this);
         VanishListCommand vanishListCommand = new VanishListCommand(this);
+        //Fly & Speed
+        FlyCommand flyCommand = new FlyCommand(this);
+        FlySpeedCommand flySpeedCommand = new FlySpeedCommand(this);
 
         // Register the command with Paper's command map
         try {
@@ -62,6 +68,10 @@ public final class BMCCore extends JavaPlugin {
             //Vanish
             getServer().getCommandMap().register("", vanishCommand);
             getServer().getCommandMap().register("", vanishListCommand);
+
+            //Fly & Speed Control
+            getServer().getCommandMap().register("", flyCommand);
+            getServer().getCommandMap().register("", flySpeedCommand);
 
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
