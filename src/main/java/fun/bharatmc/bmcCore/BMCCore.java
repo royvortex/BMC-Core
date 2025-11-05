@@ -15,6 +15,8 @@ import fun.bharatmc.bmcCore.commands.FreezeCommand;
 import fun.bharatmc.bmcCore.listeners.FreezeListener;
 import fun.bharatmc.bmcCore.managers.WhoIsManager;
 import fun.bharatmc.bmcCore.commands.WhoIsCommand;
+import fun.bharatmc.bmcCore.commands.ForceCommand;
+
 import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -92,6 +94,8 @@ public final class BMCCore extends JavaPlugin {
         FreezeCommand freezeCommand = new FreezeCommand(this);
         // WhoIs
         WhoIsCommand whoIsCommand = new WhoIsCommand(this);
+        //Force Command
+        ForceCommand forceCommand = new ForceCommand(this);
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
@@ -117,7 +121,8 @@ public final class BMCCore extends JavaPlugin {
             getServer().getCommandMap().register("", freezeCommand);
             //Who Is Command
             getServer().getCommandMap().register("", whoIsCommand);
-
+            //Force Command
+            getServer().getCommandMap().register("", forceCommand);
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
             getLogger().warning("Failed to register command with Paper API: " + e.getMessage());
