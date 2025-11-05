@@ -71,4 +71,16 @@ public class PlayerManager {
             databaseManager.savePlayerData(data);
         }
     }
+    public boolean isPlayerFrozen(Player player) {
+        PlayerData data = getPlayerData(player);
+        return data != null && data.isFrozen();
+    }
+
+    public void setPlayerFrozen(Player player, boolean frozen) {
+        PlayerData data = getPlayerData(player);
+        if (data != null) {
+            data.setFrozen(frozen);
+            savePlayerData(player);
+        }
+    }
 }

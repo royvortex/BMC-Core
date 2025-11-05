@@ -16,6 +16,7 @@ public class PlayerData {
     private Location lastLocation;
     private long firstJoin;
     private long lastLogin;
+    private boolean frozen;
 
     public PlayerData(UUID playerUUID, String playerName) {
         this.playerUUID = playerUUID;
@@ -23,6 +24,7 @@ public class PlayerData {
         this.vanished = false;
         this.flying = false;
         this.godMode = false;
+        this.frozen = false;
         this.flySpeed = 0.1f;
         this.firstJoin = System.currentTimeMillis();
         this.lastLogin = System.currentTimeMillis();
@@ -53,6 +55,9 @@ public class PlayerData {
 
     public long getLastLogin() { return lastLogin; }
     public void setLastLogin(long lastLogin) { this.lastLogin = lastLogin; }
+
+    public boolean isFrozen() { return frozen; }
+    public void setFrozen(boolean frozen) { this.frozen = frozen; }
 
     public Player getPlayer() {
         return Bukkit.getPlayer(playerUUID);
