@@ -48,6 +48,7 @@ public class DatabaseManager {
                 is_vanished BOOLEAN DEFAULT 0,
                 is_flying BOOLEAN DEFAULT 0,
                 is_god_mode BOOLEAN DEFAULT 0,
+                is_frozen BOOLEAN DEFAULT 0,
                 fly_speed REAL DEFAULT 0.1,
                 first_join BIGINT,
                 last_login BIGINT,
@@ -98,6 +99,7 @@ public class DatabaseManager {
                 playerData.setVanished(rs.getBoolean("is_vanished"));
                 playerData.setFlying(rs.getBoolean("is_flying"));
                 playerData.setGodMode(rs.getBoolean("is_god_mode"));
+                playerData.setFrozen(rs.getBoolean("is_frozen"));
                 playerData.setFlySpeed(rs.getFloat("fly_speed"));
                 playerData.setFirstJoin(rs.getLong("first_join"));
                 playerData.setLastLogin(rs.getLong("last_login"));
