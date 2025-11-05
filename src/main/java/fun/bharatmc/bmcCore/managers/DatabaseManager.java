@@ -64,10 +64,10 @@ public class DatabaseManager {
 
     public void savePlayerData(PlayerData playerData) {
         String sql = """
-            INSERT OR REPLACE INTO players 
-            (player_uuid, player_name, is_vanished, is_flying, is_god_mode, fly_speed, first_join, last_login) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT OR REPLACE INTO players 
+                    (player_uuid, player_name, is_vanished, is_flying, is_god_mode, is_frozen, fly_speed, first_join, last_login) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, playerData.getPlayerUUID().toString());
@@ -75,9 +75,10 @@ public class DatabaseManager {
             pstmt.setBoolean(3, playerData.isVanished());
             pstmt.setBoolean(4, playerData.isFlying());
             pstmt.setBoolean(5, playerData.isGodMode());
-            pstmt.setFloat(6, playerData.getFlySpeed());
-            pstmt.setLong(7, playerData.getFirstJoin());
-            pstmt.setLong(8, playerData.getLastLogin());
+            pstmt.setBoolean(6, playerData.isFrozen());
+            pstmt.setFloat(7, playerData.getFlySpeed());
+            pstmt.setLong(8, playerData.getFirstJoin());
+            pstmt.setLong(9, playerData.getLastLogin());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

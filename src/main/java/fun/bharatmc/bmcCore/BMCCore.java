@@ -13,6 +13,8 @@ import fun.bharatmc.bmcCore.commands.BroadcastCommand;
 import fun.bharatmc.bmcCore.managers.FreezeManager;
 import fun.bharatmc.bmcCore.commands.FreezeCommand;
 import fun.bharatmc.bmcCore.listeners.FreezeListener;
+import fun.bharatmc.bmcCore.managers.WhoIsManager;
+import fun.bharatmc.bmcCore.commands.WhoIsCommand;
 import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +27,7 @@ public final class BMCCore extends JavaPlugin {
     private GamemodeManager gamemodeManager;
     private BroadcastManager broadcastManager;
     private FreezeManager freezeManager;
+    private WhoIsManager whoIsManager;
 
     @Override
     public void onEnable() {
@@ -40,6 +43,8 @@ public final class BMCCore extends JavaPlugin {
         this.gamemodeManager = new GamemodeManager(this);
         this.broadcastManager = new BroadcastManager(this);
         this.freezeManager = new FreezeManager(this);
+        this.whoIsManager = new WhoIsManager(this);
+
 
         // Register commands and events (Paper style)
         registerCommands();
@@ -85,6 +90,8 @@ public final class BMCCore extends JavaPlugin {
         BroadcastCommand broadcastCommand = new BroadcastCommand(this);
         // Freeze
         FreezeCommand freezeCommand = new FreezeCommand(this);
+        // WhoIs
+        WhoIsCommand whoIsCommand = new WhoIsCommand(this);
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
@@ -108,6 +115,8 @@ public final class BMCCore extends JavaPlugin {
             getServer().getCommandMap().register("", broadcastCommand);
             //Freeze
             getServer().getCommandMap().register("", freezeCommand);
+            //Who Is Command
+            getServer().getCommandMap().register("", whoIsCommand);
 
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
@@ -128,4 +137,5 @@ public final class BMCCore extends JavaPlugin {
     public GamemodeManager getGamemodeManager() { return gamemodeManager; }
     public BroadcastManager getBroadcastManager() { return broadcastManager; }
     public FreezeManager getFreezeManager() { return freezeManager; }
+    public WhoIsManager getWhoIsManager() { return whoIsManager; }
 }
