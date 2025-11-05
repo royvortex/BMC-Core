@@ -10,6 +10,9 @@ import fun.bharatmc.bmcCore.managers.GodManager;
 import fun.bharatmc.bmcCore.managers.GamemodeManager;
 import fun.bharatmc.bmcCore.managers.BroadcastManager;
 import fun.bharatmc.bmcCore.commands.BroadcastCommand;
+import fun.bharatmc.bmcCore.managers.FreezeManager;
+import fun.bharatmc.bmcCore.commands.FreezeCommand;
+import fun.bharatmc.bmcCore.listeners.FreezeListener;
 import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +24,7 @@ public final class BMCCore extends JavaPlugin {
     private GodManager godManager;
     private GamemodeManager gamemodeManager;
     private BroadcastManager broadcastManager;
+    private FreezeManager freezeManager;
 
     @Override
     public void onEnable() {
@@ -35,6 +39,7 @@ public final class BMCCore extends JavaPlugin {
         this.godManager = new GodManager(this);
         this.gamemodeManager = new GamemodeManager(this);
         this.broadcastManager = new BroadcastManager(this);
+        this.freezeManager = new FreezeManager(this);
 
         // Register commands and events (Paper style)
         registerCommands();
@@ -78,6 +83,8 @@ public final class BMCCore extends JavaPlugin {
         GamemodeCommand gmspCommand = new GamemodeCommand(this, GameMode.SPECTATOR, "gmsp", "Change to spectator mode");
         //BroadCast
         BroadcastCommand broadcastCommand = new BroadcastCommand(this);
+        // Freeze
+        FreezeCommand freezeCommand = new FreezeCommand(this);
         // Register the command with Paper's command map
         try {
             // This is the Paper-compatible way to register commands
@@ -98,7 +105,9 @@ public final class BMCCore extends JavaPlugin {
             getServer().getCommandMap().register("", gmaCommand);
             getServer().getCommandMap().register("", gmspCommand);
             // BroadCast
-            getServer().getCommandMap().register("bmccore", broadcastCommand);
+            getServer().getCommandMap().register("", broadcastCommand);
+            //Freeze
+            getServer().getCommandMap().register("", freezeCommand);
 
             getLogger().info("Registered vanish command using Paper API");
         } catch (Exception e) {
@@ -118,4 +127,5 @@ public final class BMCCore extends JavaPlugin {
     public GodManager getGodManager() { return godManager; }
     public GamemodeManager getGamemodeManager() { return gamemodeManager; }
     public BroadcastManager getBroadcastManager() { return broadcastManager; }
+    public FreezeManager getFreezeManager() { return freezeManager; }
 }
