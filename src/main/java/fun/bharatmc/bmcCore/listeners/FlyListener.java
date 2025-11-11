@@ -28,6 +28,5 @@ public class FlyListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        // No special handling needed for quit - data is saved automatically
     }
 }
